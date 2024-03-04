@@ -81,10 +81,9 @@ export default function Home({
     ? data
     : data?.filter(
         (item) =>
-          searchParams.query
-            .toString()
+          item.company
             .toLowerCase()
-            .includes(item.company.toLowerCase()) ||
+            .includes(searchParams.query.toString().toLowerCase()) ||
           item.position
             .toLowerCase()
             .replaceAll(" ", "")
