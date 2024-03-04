@@ -9,10 +9,10 @@ interface ListProps {
 }
 
 export const List = ({ items }: ListProps) => {
-  const matches = useMediaQuery("(min-width: 768px)");
+  const matches = useMediaQuery("(min-width: 1024px)");
 
   return (
-    <div className="mb-24 w-full space-y-14 md:space-y-7">
+    <div className="mb-24 w-full space-y-14 lg:space-y-7">
       {items.map((item) => (
         <>
           {matches ? (
