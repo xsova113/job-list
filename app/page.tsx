@@ -35,7 +35,10 @@ export default function Home({
   const [selected, setSelected] =
     useState<{ label: string; value: string }[]>();
 
-  const { data, isPending } = useFetchData("data.json");
+  const { data, isPending, filteredData } = useFetchData(
+    "data.json",
+    searchParams.query,
+  );
 
   useEffect(() => {
     const url = qs.stringifyUrl(
@@ -64,29 +67,6 @@ export default function Home({
       label: item.position,
     })),
   ];
-
-  const filteredData = !searchParams.query
-    ? data
-    : data?.filter(
-        (item) =>
-          item.company
-            .toLowerCase()
-            .includes(searchParams.query.toString().toLowerCase()) ||
-          item.position
-            .toLowerCase()
-            .replaceAll(" ", "")
-            .includes(
-              searchParams.query.toString().toLowerCase().replaceAll(" ", ""),
-            ) ||
-          item.tools
-            .map((tool) => tool.toLowerCase())
-            .toString()
-            .includes(searchParams.query.toString().toLowerCase()) ||
-          item.languages
-            .map((lang) => lang.toLowerCase())
-            .toString()
-            .includes(searchParams.query.toString().toLowerCase()),
-      );
 
   if (!filteredData)
     return (
