@@ -35,7 +35,7 @@ export default function Home({
   const [selected, setSelected] =
     useState<{ label: string; value: string }[]>();
 
-  const { data, isPending, filteredData } = useFetchData(
+  const { data, isPending } = useFetchData(
     "data.json",
     searchParams.query,
   );
@@ -68,7 +68,7 @@ export default function Home({
     })),
   ];
 
-  if (!filteredData)
+  if (!data)
     return (
       <main className="mt-12 flex flex-col items-center justify-center">
         No jobs found...
@@ -86,7 +86,7 @@ export default function Home({
         placeholder="Search keywords"
         onChange={(e: any) => setSelected(e)}
       />
-      <List items={filteredData} />
+      <List items={data} />
     </main>
   );
 }
