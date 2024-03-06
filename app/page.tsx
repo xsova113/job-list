@@ -1,14 +1,13 @@
 "use client";
 
 import { List } from "@/components/list";
-import { IData } from "@/type";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { StylesConfig } from "react-select";
 import CreatableSelect from "react-select/creatable";
 import makeAnimated from "react-select/animated";
 import qs from "query-string";
 import { usePathname, useRouter } from "next/navigation";
+import { useFetchData } from "@/hooks/useFetchData";
 
 const colorStyles: StylesConfig = {
   control: (styles) => ({
@@ -32,22 +31,11 @@ export default function Home({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const [data, setData] = useState<IData[]>();
-  const [isPending, setIsPending] = useState(true);
   const animatedComponents = makeAnimated();
   const [selected, setSelected] =
     useState<{ label: string; value: string }[]>();
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      axios
-        .get("data.json")
-        .then((res) => setData(res.data))
-        .finally(() => setIsPending(false));
-    }, 250);
-
-    return () => clearTimeout(timeoutId);
-  }, []);
+  const { data, isPending } = useFetchData("data.json");
 
   useEffect(() => {
     const url = qs.stringifyUrl(

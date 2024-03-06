@@ -2,6 +2,7 @@ import { IData } from "@/type";
 import { Badge } from "./ui/badge";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import qs from "query-string";
 
 interface ListCardProps {
   item: IData;
@@ -15,12 +16,13 @@ export const ListCard = ({ item }: ListCardProps) => {
     ...item.tools,
   ];
 
+  const handleClick = (tool: string) => {};
+
   return (
     <div
-      className={cn(
-        " w-full rounded-md bg-white p-5 shadow-xl",
-        { "border-l-4 border-primary": item.featured },
-      )}
+      className={cn(" w-full rounded-md bg-white p-5 shadow-xl", {
+        "border-l-4 border-primary": item.featured,
+      })}
     >
       <div className="flex items-center justify-between">
         <div className="flex gap-x-3">
@@ -56,7 +58,11 @@ export const ListCard = ({ item }: ListCardProps) => {
 
         <div className="space-x-2">
           {mergedList.map((tool) => (
-            <Badge className="cursor-pointer" key={tool}>
+            <Badge
+              className="cursor-pointer"
+              key={tool}
+              onClick={() => handleClick(tool)}
+            >
               {tool}
             </Badge>
           ))}
